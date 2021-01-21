@@ -3,6 +3,7 @@
 	<Banner></Banner>
 	<BannerGrid></BannerGrid>
 	<ListProduct></ListProduct>
+	<Footer></Footer>
 </template>
 
 <script>
@@ -10,6 +11,7 @@ import NavBar from "../components/NavBar.vue";
 import Banner from "../components/Banner.vue";
 import BannerGrid from "../components/BannerGrid.vue";
 import ListProduct from "../components/ListProduct.vue";
+import Footer from "../components/Footer.vue";
 
 export default {
 	components: {
@@ -17,6 +19,7 @@ export default {
 		Banner,
 		BannerGrid,
 		ListProduct,
+		Footer,
 	},
 };
 </script>

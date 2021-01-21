@@ -29,6 +29,7 @@ export default {
 }
 .card-body {
 	padding: 0px;
+	padding-bottom: 10px;
 }
 .card-title {
 	margin-bottom: 6px;
