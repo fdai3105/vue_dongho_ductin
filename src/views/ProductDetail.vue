@@ -1,6 +1,25 @@
 <template>
 	<NavBar />
-	{{ product.price }}
+	<div class="row">
+		<div class="col-4">
+			<img src="" alt="" />
+		</div>
+		<div class="col-4">
+			<h4>
+				Đồng hồ nam Hublot Big Bang Caviar Gold Diamond 41mm –
+				346.px.0880.vr.1204
+			</h4>
+			<p>945,000,000₫ 667,000,000₫</p>
+			<p>Tình trạng: còn hàng</p>
+			<div>
+				<button class="btn">Mua hang`</button>
+			</div>
+		</div>
+		<div class="col-4">
+			<h4>SẢN PHẨM NỔI BẬT</h4>
+			<ListHotProduct />
+		</div>
+	</div>
 	<Footer />
 </template>
 
@@ -29,5 +48,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
