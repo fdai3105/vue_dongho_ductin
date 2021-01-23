@@ -15,9 +15,10 @@
 </template>
 
 <script>
-import axios from "axios";
-import ItemProduct from "./ItemProduct.vue";
-import Loading from "./commons/Loading.vue";
+// import axios from "axios";
+import ItemProduct from "./ItemProduct";
+import Loading from "./commons/Loading";
+import { productService } from "../services/index";
 
 export default {
 	name: "ListProduct",
@@ -32,12 +33,14 @@ export default {
 	},
 	methods() {},
 	created() {
-		axios
-			.get("https://078b52aae179.ngrok.io/api/product")
-			.then((response) => {
-				this.products = response.data.data;
+		productService
+			.getProducts()
+			.then((result) => {
+				this.products = result.data.data;
 			})
-			.catch(function () {});
+			.catch((err) => {
+				console.log(err);
+			});
 	},
 	mounted() {},
 };

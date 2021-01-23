@@ -59,7 +59,8 @@
 </template>
 
 <script>
-import axios from "axios";
+import { productService } from "../../services/index";
+
 export default {
 	name: "NavBar",
 	data() {
@@ -70,14 +71,22 @@ export default {
 	},
 	methods: {},
 	created() {
-		axios
-			.get("https://078b52aae179.ngrok.io/api/category")
-			.then((response) => (this.categories = response.data.data))
-			.catch();
-		axios
-			.get("https://078b52aae179.ngrok.io/api/brand")
-			.then((response) => (this.brands = response.data.data))
-			.catch();
+		productService
+			.getCategory()
+			.then((result) => {
+				this.categories = result.data.data;
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+		productService
+			.getBrand()
+			.then((result) => {
+				this.brands = result.data.data;
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	},
 	mounted() {},
 };
