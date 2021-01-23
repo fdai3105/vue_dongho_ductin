@@ -1,10 +1,13 @@
 <template>
-	<div>
+	<div class="pt-5 pb-5">
 		<h4 class="title text-uppercase">Sản phẩm mới</h4>
 		<div class="container">
 			<div class="row">
-				<div v-for="product in products" :key="product.data.id" class="col-3">
-					<ItemProduct v-bind:product="product.data"></ItemProduct>
+				<div v-if="!products.length" class="col">
+					<Loading />
+				</div>
+				<div v-for="product in products" :key="product.id" class="col-3">
+					<ItemProduct v-bind:product="product"></ItemProduct>
 				</div>
 			</div>
 		</div>
@@ -14,11 +17,13 @@
 <script>
 import axios from "axios";
 import ItemProduct from "./ItemProduct.vue";
+import Loading from "./commons/Loading.vue";
 
 export default {
 	name: "ListProduct",
 	components: {
 		ItemProduct,
+		Loading,
 	},
 	data() {
 		return {
@@ -28,9 +33,9 @@ export default {
 	methods() {},
 	created() {
 		axios
-			.get("http://127.0.0.1:8000/api/product")
+			.get("https://078b52aae179.ngrok.io/api/product")
 			.then((response) => {
-				this.products = response.data;
+				this.products = response.data.data;
 			})
 			.catch(function () {});
 	},
@@ -40,11 +45,9 @@ export default {
 
 <style scoped>
 .title {
-	margin-top: 30px;
 	margin-bottom: 20px;
 	letter-spacing: 2px;
-	color: #0E3A3B;
+	color: #0e3a3b;
 	font-weight: 700;
-	
 }
 </style>
