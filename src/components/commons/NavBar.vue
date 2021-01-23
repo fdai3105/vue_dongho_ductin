@@ -8,7 +8,7 @@
 			<ul class="navbar-nav">
 				<!-- Home -->
 				<li class="nav-item mr-4">
-					<router-link to='/' class="nav-link">Trang chủ<span class="sr-only">(current)</span></router-link>
+					<router-link to='/' class="nav-link">Trang chủ</router-link>
 				</li>
 
 				<!-- Brand -->

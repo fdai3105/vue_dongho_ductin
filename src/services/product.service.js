@@ -1,4 +1,4 @@
-import axios from "axios"
+import http from "./axios";
 
 export const productService = {
     getProduct,
@@ -9,28 +9,25 @@ export const productService = {
     getProductByCategory,
 }
 
-axios.defaults.baseURL = 'http://127.0.0.1:8000/api/';
-axios.defaults.headers.post['Accept'] = 'application/json';
-
 function getProducts() {
-    return axios.get('product');
+    return http.get('product');
 }
 
 function getProduct(name) {
-    return axios.get('product/by-name/' + name);
+    return http.get('product/by-name/' + name);
 }
 
 function getCategory() {
-    return axios.get('category');
+    return http.get('category');
 }
 function getProductByCategory(name) {
-    return axios.get('category/product/' + name);
+    return http.get('category/product/' + name);
 }
 
 function getBrand() {
-    return axios.get('brand');
+    return http.get('brand');
 }
 
 function getProductByBrand(name) {
-    return axios.get('brand/product/' + name);
+    return http.get('brand/product/' + name);
 }
