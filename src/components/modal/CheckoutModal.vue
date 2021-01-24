@@ -10,6 +10,12 @@
 					</button>
 				</div>
 				<div class="modal-body text-left">
+					<div v-if="err">
+						<div class="alert alert-danger" role="alert">
+							{{ err }}
+						</div>
+					</div>
+
 					<div class="form-group">
 						<label for="note">Note:</label>
 						<textarea v-model="note" class="form-control" id="note" rows="3"></textarea>
@@ -45,7 +51,8 @@ export default {
 		return {
 			address: [],
 			note: "",
-			addressSelected: Number,
+			addressSelected: null,
+			err: "",
 		};
 	},
 	methods: {
@@ -60,6 +67,10 @@ export default {
 				});
 		},
 		checkout() {
+			if (!this.addressSelected) {
+				this.err = "Vui lòng kiểm tra lại thông tin";
+				return;
+			}
 			cartService
 				.checkout(
 					userService.auth().access_token,
