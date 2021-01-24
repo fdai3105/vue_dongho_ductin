@@ -4,6 +4,8 @@ import Brand from '../views/Brand'
 import Category from '../views/Category'
 import ProductDetail from '../views/ProductDetail'
 import About from '../views/About'
+import Cart from '../views/Cart'
+import Login from ''
 
 const routes = [
   {
@@ -31,6 +33,15 @@ const routes = [
     name: 'ProductDetail',
     component: ProductDetail,
   },
+  {
+    path: '/cart',
+    name: 'Cart',
+    component: Cart,
+  }, {
+    path: '/login',
+    name: 'Login',
+    component: Login,
+  }, {}
 ]
 
 const router = createRouter({

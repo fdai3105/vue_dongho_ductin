@@ -1,16 +1,17 @@
 <template>
-	<NavBar />
-	<Footer />
+	<div>
+		<NavBar />
+		<Footer />
+	</div>
 </template>
 
 <script>
 import Footer from "../components/commons/Footer.vue";
 import NavBar from "../components/commons/NavBar.vue";
 export default {
-	components: { Footer, NavBar },
+	components: { NavBar, Footer },
 };
 </script>
 
-<style
-NavBar>
+<style>
 </style>

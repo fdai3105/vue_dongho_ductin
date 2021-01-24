@@ -18,7 +18,7 @@
 						<p class="title">{{ product.name }}</p>
 						<p class="price">{{ product.price.toLocaleString() }}₫</p>
 						<p>Tình trạng: còn hàng</p>
-						<div class="dropdown-divider"></div>
+						<div class="dropdown-divider"/>
 						<div>
 							<div class="form-inline mt-3" action="">
 								<div class="form-group">

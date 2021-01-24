@@ -1,4 +1,22 @@
 <template>
+	<div class="topbar container-fluid text-white">
+		<div class="h-25 px-5 py-2 row bg-success justify-content-end">
+			<div class="row mr-5">
+				<router-link class="" to="/login">
+					Đăng nhập
+				</router-link>
+				<p style="margin:0px 10px">|</p>
+				<router-link class="" to="/register">
+					Đăng ký
+				</router-link>
+			</div>
+			<router-link to="/cart">
+				<svg style="height:25px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+					<path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" />
+				</svg>
+			</router-link>
+		</div>
+	</div>
 	<nav class="navbar navbar-expand-lg">
 		<div class="collapse navbar-collapse mx-5" id="navbarSupportedContent">
 			<a class="navbar-brand mr-auto" href="#">
