@@ -11,7 +11,7 @@
 			<transition name="fade">
 				<div v-if="Object.entries(product).length" class="row col-8">
 					<div class="col-6 text-center">
-						<img v-if="product.images[0] != null" height="400" style="width:100%; object-fit:cover" :src="`http://127.0.0.1:8000/` + product.images[0].image" />
+						<img v-if="product.images[0] != null" height="400" style="width:100%; object-fit:cover" :src="`https://4c5430123f64.ngrok.io/` + product.images[0].image" />
 						<img v-if="product.images[0] == null" height="400" style="width:100%; object-fit:cover" src="../assets/placeholder.jpg" />
 					</div>
 					<div class="col-6 text-left">
