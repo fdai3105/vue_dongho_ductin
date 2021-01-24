@@ -26,6 +26,7 @@ import Footer from "../components/commons/Footer";
 import ItemProduct from "../components/ItemProduct";
 import { productService } from "../services/product.service";
 import Loading from "../components/commons/Loading.vue";
+
 export default {
 	components: { NavBar, Footer, ItemProduct, Loading },
 	data() {

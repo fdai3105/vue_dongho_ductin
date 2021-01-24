@@ -1,7 +1,18 @@
 <template>
 	<div class="topbar container-fluid text-white">
 		<div class="h-25 px-5 py-2 row bg-success justify-content-end">
-			<div class="row mr-5">
+			<div v-if="auth">
+				<div class="dropdown">
+					<button class="dropbtn">Xin chào, {{ auth.user.full_name }}</button>
+					<div class="dropdown-content text-left">
+						<router-link to="/cart" class="dropdown-item">
+							Giỏ hàng
+						</router-link>
+						<a @click="logout" class="dropdown-item" href="#">Đăng xuất</a>
+					</div>
+				</div>
+			</div>
+			<div v-else class="row mr-5">
 				<router-link class="" to="/login">
 					Đăng nhập
 				</router-link>
@@ -10,11 +21,6 @@
 					Đăng ký
 				</router-link>
 			</div>
-			<router-link to="/cart">
-				<svg style="height:25px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-					<path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" />
-				</svg>
-			</router-link>
 		</div>
 	</div>
 	<nav class="navbar navbar-expand-lg">
@@ -77,7 +83,7 @@
 </template>
 
 <script>
-import { productService } from "../../services/index";
+import { productService, userService } from "../../services/index";
 
 export default {
 	name: "NavBar",
@@ -85,9 +91,20 @@ export default {
 		return {
 			categories: [],
 			brands: [],
+			auth: {
+				access_token: String,
+				expires_at: String,
+				user: Object,
+			},
 		};
 	},
-	methods: {},
+	methods: {
+		logout() {
+			userService.logout();
+			this.$router.push("/");
+			window.location.href = "/";
+		},
+	},
 	created() {
 		productService
 			.getCategory()
@@ -106,11 +123,17 @@ export default {
 				console.log(err);
 			});
 	},
-	mounted() {},
+	mounted() {
+		const auth = userService.auth();
+		this.auth = auth;
+	},
 };
 </script>
 
 <style scoped>
+.topbar a {
+	color: white;
+}
 .navbar {
 	background-color: #0e3a3b;
 }
@@ -125,5 +148,43 @@ export default {
 }
 .dropdown-menu a:hover {
 	color: black;
+}
+
+/* Dropdown Button */
+.dropbtn {
+	background-color: transparent;
+	color: white;
+	font-size: 16px;
+	border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+	position: relative;
+	display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+	display: none;
+	position: absolute;
+	z-index: 1;
+	padding: 0.5rem 0;
+	background-color: white;
+	background-clip: padding-box;
+	border: 1px solid #00000026;
+	border-radius: 0.25rem;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+	color: black;
+	text-decoration: none;
+	display: block;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+	display: block;
 }
 </style>

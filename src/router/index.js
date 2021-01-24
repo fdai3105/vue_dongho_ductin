@@ -5,7 +5,9 @@ import Category from '../views/Category'
 import ProductDetail from '../views/ProductDetail'
 import About from '../views/About'
 import Cart from '../views/Cart'
-import Login from ''
+import Login from '../views/Login'
+import Register from '../views/Register'
+import { userService } from '../services'
 
 const routes = [
   {
@@ -37,11 +39,29 @@ const routes = [
     path: '/cart',
     name: 'Cart',
     component: Cart,
+    beforeEnter: (to, from, next) => {
+      if (userService.auth()) {
+        next();
+      } else {
+        next({ path: '/login' });
+      }
+    }
   }, {
     path: '/login',
     name: 'Login',
     component: Login,
-  }, {}
+    beforeEnter: (to, from, next) => {
+      if (!userService.auth()) {
+        next();
+      } else {
+        next({ path: '/' });
+      }
+    }
+  }, {
+    path: '/register',
+    name: 'Register',
+    component: Register,
+  }
 ]
 
 const router = createRouter({

@@ -1,6 +1,6 @@
 <template>
 	<div class="card h-100">
-		<img v-if="product.images.length" :src="'https://4c5430123f64.ngrok.io' + product.images[0].image" />
+		<img v-if="product.images.length" :src="'http://127.0.0.1:8000/' + product.images[0].image" />
 		<img v-if="!product.images.length" src="../assets/placeholder.jpg" class="object-fit: cover">
 		<div class="card-body">
 			<p class="card-title" style="height: 45px;">{{ formatName }}</p>

@@ -11,18 +11,18 @@
 			<transition name="fade">
 				<div v-if="Object.entries(product).length" class="row col-8">
 					<div class="col-6 text-center">
-						<img v-if="product.images[0] != null" height="400" style="width:100%; object-fit:cover" :src="`https://4c5430123f64.ngrok.io/` + product.images[0].image" />
+						<img v-if="product.images[0] != null" height="400" style="width:100%; object-fit:cover" :src="`http://127.0.0.1:8000/` + product.images[0].image" />
 						<img v-if="product.images[0] == null" height="400" style="width:100%; object-fit:cover" src="../assets/placeholder.jpg" />
 					</div>
 					<div class="col-6 text-left">
 						<p class="title">{{ product.name }}</p>
 						<p class="price">{{ product.price.toLocaleString() }}₫</p>
 						<p>Tình trạng: còn hàng</p>
-						<div class="dropdown-divider"/>
+						<div class="dropdown-divider" />
 						<div>
 							<div class="form-inline mt-3" action="">
 								<div class="form-group">
-									<input v-model="quanity" class="form-control w-50 mr-2" type="number" placeholder="số lượng: " />
+									<input v-model="quantity" class="form-control w-50 mr-2" type="number" placeholder="số lượng: " />
 									<button v-on:click="addToCart" class="btn btn-warning">Mua hàng</button>
 								</div>
 							</div>
@@ -63,33 +63,48 @@ import Footer from "../components/commons/Footer";
 import Loading from "../components/commons/Loading.vue";
 import NavBar from "../components/commons/NavBar";
 import ListHotProduct from "../components/ListHotProduct";
-import { productService } from "../services/index";
+import { productService, userService, cartService } from "../services/index";
 
 export default {
 	components: { Footer, NavBar, ListHotProduct, Loading },
 	data() {
 		return {
 			product: Object,
+			quantity: 1,
 		};
 	},
 	methods: {
 		addToCart() {
-			const cart = {
-				product: this.product,
-				quanity: this.quanity ?? 1,
-			};
+			if (userService.auth().access_token) {
+				cartService
+					.addToCart(
+						userService.auth().access_token,
+						this.product.id,
+						this.quantity
+					)
+					.then((response) => {
+						console.log(response);
+					})
+					.catch((err) => {
+						console.log(err.response);
+					});
+			}
+			// const cart = {
+			// 	product: this.product,
+			// 	quanity: this.quanity ?? 1,
+			// };
 
-			var carts = JSON.parse(localStorage.getItem("carts"));
-			if (carts == null) carts = [];
-			const alreadyAdd = carts.some((item) => {
-				if (item.product.id == cart.product.id) {
-					item.quanity++;
-					return true;
-				}
-				return false;
-			});
-			if (!alreadyAdd) carts.push(cart);
-			localStorage.setItem("carts", JSON.stringify(carts));
+			// var carts = JSON.parse(localStorage.getItem("carts"));
+			// if (carts == null) carts = [];
+			// const alreadyAdd = carts.some((item) => {
+			// 	if (item.product.id == cart.product.id) {
+			// 		item.quanity++;
+			// 		return true;
+			// 	}
+			// 	return false;
+			// });
+			// if (!alreadyAdd) carts.push(cart);
+			// localStorage.setItem("carts", JSON.stringify(carts));
 		},
 	},
 	created() {
