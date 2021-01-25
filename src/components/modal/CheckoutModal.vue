@@ -29,14 +29,16 @@
 								{{ item.city }}, {{ item.district}}, {{item.ward}}, {{item.address}}
 							</label>
 						</div>
-						<button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#addAddressModal">
+						<button type="button" class="btn btn-primary mt-3" data-dismiss="modal" data-toggle="modal" data-target="#addAddressModal">
 							Thêm địa chỉ
 						</button>
 					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button @click="checkout" type="button" class="btn btn-primary">OK</button>
+					<button @click="checkout" type="button" class="btn btn-primary">
+						<span v-if="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+						OK</button>
 				</div>
 			</div>
 		</div>
@@ -53,6 +55,7 @@ export default {
 			note: "",
 			addressSelected: null,
 			err: "",
+			isLoading: false,
 		};
 	},
 	methods: {
@@ -67,6 +70,7 @@ export default {
 				});
 		},
 		checkout() {
+			this.isLoading = true;
 			if (!this.addressSelected) {
 				this.err = "Vui lòng kiểm tra lại thông tin";
 				return;
@@ -80,8 +84,10 @@ export default {
 				.then((result) => {
 					result;
 					window.location.href = "/cart";
+					this.isLoading = false;
 				})
 				.catch((err) => {
+					this.isLoading = false;
 					console.log(err.response);
 				});
 		},

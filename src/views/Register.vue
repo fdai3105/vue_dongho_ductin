@@ -36,7 +36,9 @@
 				</select>
 			</div>
 			<div class="d-flex justify-content-end">
-				<button type="submit" class="btn btn-primary">Đăng ký</button>
+				<button type="submit" class="btn btn-primary">
+					<span v-if="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+					Đăng ký</button>
 			</div>
 		</form>
 	</div>
@@ -59,6 +61,7 @@ export default {
 			phoneNumber: "",
 			gender: 1,
 			errors: [],
+			isLoading: false,
 		};
 	},
 	methods: {
@@ -83,6 +86,7 @@ export default {
 			}
 		},
 		submit: function (e) {
+			this.isLoading = true;
 			if (this.validation()) {
 				this.errors = "";
 				userService
@@ -95,6 +99,7 @@ export default {
 					)
 					.then((user) => {
 						user;
+						this.isLoading = false;
 						this.$router.push("/login");
 					})
 					.catch((err) => {
@@ -102,6 +107,7 @@ export default {
 						for (const key in err.response.data.errors) {
 							this.errors.push(err.response.data.errors[key][0]);
 						}
+						this.isLoading = false;
 					});
 			}
 			e.preventDefault();

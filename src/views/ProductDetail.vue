@@ -1,6 +1,5 @@
 <template>
 	<NavBar />
-
 	<div class="container mt-5">
 		<div class="row">
 			<!-- loading placeholder -->
@@ -23,7 +22,9 @@
 							<div class="form-inline mt-3" action="">
 								<div class="form-group">
 									<input v-model="quantity" class="form-control w-50 mr-2" type="number" placeholder="số lượng: " />
-									<button v-on:click="addToCart" class="btn btn-warning">Mua hàng</button>
+									<button v-on:click="addToCart" class="btn btn-warning">
+										<span v-if="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+										Thêm vào giỏ</button>
 								</div>
 							</div>
 						</div>
@@ -71,10 +72,12 @@ export default {
 		return {
 			product: Object,
 			quantity: 1,
+			isLoading: false,
 		};
 	},
 	methods: {
 		addToCart() {
+			this.isLoading = true;
 			if (userService.auth().access_token) {
 				cartService
 					.addToCart(
@@ -84,27 +87,14 @@ export default {
 					)
 					.then((response) => {
 						console.log(response);
+						window.location.href = "/cart";
+						this.isLoading = false;
 					})
 					.catch((err) => {
+						this.isLoading = false;
 						console.log(err.response);
 					});
 			}
-			// const cart = {
-			// 	product: this.product,
-			// 	quanity: this.quanity ?? 1,
-			// };
-
-			// var carts = JSON.parse(localStorage.getItem("carts"));
-			// if (carts == null) carts = [];
-			// const alreadyAdd = carts.some((item) => {
-			// 	if (item.product.id == cart.product.id) {
-			// 		item.quanity++;
-			// 		return true;
-			// 	}
-			// 	return false;
-			// });
-			// if (!alreadyAdd) carts.push(cart);
-			// localStorage.setItem("carts", JSON.stringify(carts));
 		},
 	},
 	created() {

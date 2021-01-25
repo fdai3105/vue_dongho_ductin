@@ -37,7 +37,9 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button @click="submit" type="button" class="btn btn-primary">OK</button>
+					<button @click="submit" type="button" class="btn btn-primary">
+						<span v-if="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+						OK</button>
 				</div>
 			</div>
 		</div>
@@ -58,6 +60,7 @@ export default {
 			wardSelected: {},
 			detail: "",
 			err: "",
+			isLoading: false,
 		};
 	},
 	methods: {
@@ -106,6 +109,7 @@ export default {
 			}
 		},
 		submit() {
+			this.isLoading = true;
 			if (this.validation()) {
 				addressService
 					.addAddress(
@@ -117,8 +121,11 @@ export default {
 					)
 					.then((result) => {
 						result;
+						window.location.href = "/cart";
+						this.isLoading = false;
 					})
 					.catch((err) => {
+						this.isLoading = false;
 						console.log(err.response);
 					});
 			} else {

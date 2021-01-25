@@ -14,7 +14,9 @@
 				<input v-model="password" type="password" class="form-control" placeholder="Password">
 			</div>
 			<div class="d-flex justify-content-end">
-				<button type="submit" class="btn btn-primary">Đăng nhập</button>
+				<button type="submit" class="btn btn-primary">
+					<span v-if="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+					Đăng nhập</button>
 			</div>
 		</form>
 	</div>
@@ -33,6 +35,7 @@ export default {
 			email: "",
 			password: "",
 			error: "",
+			isLoading: false,
 		};
 	},
 	methods: {
@@ -45,6 +48,7 @@ export default {
 			}
 		},
 		submit: function (e) {
+			this.isLoading = true;
 			if (this.validation()) {
 				this.error = "";
 				userService
@@ -54,10 +58,12 @@ export default {
 							localStorage.setItem("user", JSON.stringify(user.data));
 							this.$router.push("/");
 						}
+						this.isLoading = false;
 					})
 					.catch((err) => {
 						console.log(err);
 						this.error = "Sai mật khẩu hoặc tài khoản";
+						this.isLoading = false;
 					});
 			}
 			e.preventDefault();
